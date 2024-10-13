@@ -1,1 +1,3 @@
-JOIN_SYMBOL: str
+from typing import Final
+
+JOIN_SYMBOL: Final[str] = "§"

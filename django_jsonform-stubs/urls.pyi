@@ -1,5 +1,6 @@
-from . import views as views
-from _typeshed import Incomplete
+from typing import Union
+
+from django.urls import URLPattern, URLResolver
 
 app_name: str
-urlpatterns: Incomplete
+urlpatterns: list[Union[URLPattern, URLResolver]]

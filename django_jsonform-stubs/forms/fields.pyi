@@ -1,33 +1,48 @@
-from _typeshed import Incomplete
+from json import JSONDecoder, JSONEncoder
+from tkinter import Widget
+from typing import Any, Optional
+
 from django.contrib.postgres.forms import SimpleArrayField
 from django.db import models as models
-from django_jsonform.exceptions import JSONSchemaValidationError as JSONSchemaValidationError
+from django.forms import Field
 from django_jsonform.forms.compat import JSONFormField as DjangoJSONFormField
-from django_jsonform.validators import JSONSchemaValidator as JSONSchemaValidator
-from django_jsonform.widgets import JSONFormWidget as JSONFormWidget
+from django_jsonform.utils import ErrorMap, RootSchema
+from django_jsonform.widgets import JSONFormWidget
 
-django_major: Incomplete
-django_minor: Incomplete
+django_major: int
+django_minor: int
 
-class SimpleArrayField:
-    mock_field: bool
+try:
+    from django.contrib.postgres.forms import SimpleArrayField
+except ImportError:
+    class SimpleArrayField:
+        mock_field: bool
 
 class JSONFormField(DjangoJSONFormField):
-    file_handler: Incomplete
-    widget: Incomplete
-    def __init__(self, *, schema: Incomplete | None = ..., encoder: Incomplete | None = ..., decoder: Incomplete | None = ..., model_name: str = ..., file_handler: str = ..., **kwargs) -> None: ...
-    def validate(self, value) -> None: ...
-    def run_validators(self, value) -> None: ...
-    def add_error(self, error_map) -> None: ...
+    file_handler: str
+    widget: JSONFormWidget
+    def __init__(
+        self,
+        *,
+        schema: Optional[RootSchema] = ...,
+        encoder: Optional[JSONEncoder] = ...,
+        decoder: Optional[JSONDecoder] = ...,
+        model_name: str = ...,
+        file_handler: str = ...,
+        **kwargs: Any,
+    ) -> None: ...
+    def validate(self, value: Any) -> None: ...
+    def run_validators(self, value: Any) -> None: ...
+    def add_error(self, error_map: ErrorMap) -> None: ...
 
 class ArrayFormField(SimpleArrayField):
-    base_field: Incomplete
-    max_items: Incomplete
-    min_items: Incomplete
-    nested: Incomplete
-    schema: Incomplete
-    widget: Incomplete
-    def __init__(self, base_field, **kwargs) -> None: ...
-    def prepare_value(self, value): ...
-    def to_python(self, value): ...
+    base_field: Field
+    max_items: int
+    min_items: int
+    nested: bool
+    schema: RootSchema
+    widget: Widget
+    def __init__(self, base_field: Field, **kwargs: Any) -> None: ...
+    def prepare_value(self, value: Any) -> Any: ...
+    def to_python(self, value: Any) -> Any: ...
     def get_schema(self): ...

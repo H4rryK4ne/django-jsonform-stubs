@@ -1,16 +1,34 @@
-from _typeshed import Incomplete
-from django import forms
-from django_jsonform.utils import get_setting as get_setting, normalize_schema as normalize_schema
+from typing import Any
 
-class JSONFormWidget(forms.Widget):
+from django.forms.renderers import BaseRenderer
+from django.forms.widgets import Media, Widget
+from django.utils.safestring import SafeString
+from django_jsonform.utils import ErrorMap, RootSchema
+from typing_extensions import Optional
+
+class JSONFormWidget(Widget):
     template_name: str
-    schema: Incomplete
-    model_name: Incomplete
-    file_handler: Incomplete
-    validate_on_submit: Incomplete
-    def __init__(self, schema, model_name: str = ..., file_handler: str = ..., validate_on_submit: bool = ..., attrs: Incomplete | None = ...) -> None: ...
-    def get_schema(self): ...
-    def render(self, name, value, attrs: Incomplete | None = ..., renderer: Incomplete | None = ...): ...
-    def add_error(self, error_map) -> None: ...
+    schema: RootSchema
+    model_name: str
+    file_handler: str
+    validate_on_submit: bool
+
+    def __init__(
+        self,
+        schema: RootSchema,
+        model_name: str = ...,
+        file_handler: str = ...,
+        validate_on_submit: bool = ...,
+        attrs: Optional[dict[str, Any]] = ...,
+    ) -> None: ...
+    def get_schema(self) -> RootSchema: ...
+    def render(
+        self,
+        name: str,
+        value: Any,
+        attrs: Optional[dict[str, Any]] = ...,
+        renderer: Optional[BaseRenderer] = ...,
+    ) -> SafeString: ...
+    def add_error(self, error_map: ErrorMap) -> None: ...
     @property
-    def media(self): ...
+    def media(self) -> Media: ...

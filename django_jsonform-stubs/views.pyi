@@ -1,7 +1,12 @@
-from _typeshed import Incomplete
+from collections.abc import Callable
+from typing import Optional, Union
 
-module_path: Incomplete
-handler_func: Incomplete
-FILE_UPLOAD_HANDLER: Incomplete
+from django.http import HttpRequest, HttpResponseNotAllowed, JsonResponse
 
-def upload_handler(request): ...
+module_path: str
+handler_func: str
+FILE_UPLOAD_HANDLER: Optional[Callable[[HttpRequest], JsonResponse]]
+
+def upload_handler(
+    request: HttpRequest,
+) -> Union[JsonResponse, HttpResponseNotAllowed]: ...

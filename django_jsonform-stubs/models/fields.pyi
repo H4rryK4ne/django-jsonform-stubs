@@ -1,24 +1,35 @@
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Any
+
 from _typeshed import Incomplete
-from django.contrib.postgres.fields import ArrayField as DjangoArrayField
-from django_jsonform.forms.fields import ArrayFormField as ArrayFormField, JSONFormField as JSONFormField
-from django_jsonform.models.compat import JSONField as DjangoJSONField
+from django.db.models import Model
+from django.forms import JSONField as DjangoJSONField
+from django.forms import forms
 
-django_major: Incomplete
-django_minor: Incomplete
+if TYPE_CHECKING:
+    from django_jsonform.utils import ArraySchema, RootSchema
+else:
+    ArraySchema = object
 
-class DjangoArrayField:
-    mock_field: bool
+django_major: int
+django_minor: int
+
+try:
+    from django.contrib.postgres.fields import ArrayField as DjangoArrayField
+except ImportError:
+    class DjangoArrayField:
+        mock_field: bool
 
 class JSONField(DjangoJSONField):
-    schema: Incomplete
-    pre_save_hook: Incomplete
-    file_handler: Incomplete
-    def __init__(self, *args, **kwargs) -> None: ...
-    def formfield(self, **kwargs): ...
-    def pre_save(self, model_instance, add): ...
+    schema: RootSchema
+    pre_save_hook: Callable[[Any], Any]
+    file_handler: str
+    def __init__(self, *args: Any, **kwargs: Any) -> None: ...
+    def formfield(self, **kwargs: Any) -> forms.Field: ...
+    def pre_save(self, model_instance: Model, add: bool) -> Any: ...
 
 class ArrayField(DjangoArrayField):
-    nested: Incomplete
-    schema: Incomplete
-    def __init__(self, *args, **kwargs) -> None: ...
-    def formfield(self, **kwargs): ...
+    nested: bool
+    schema: ArraySchema
+    def __init__(self, *args: Any, **kwargs: Any) -> None: ...
+    def formfield(self, **kwargs: Any) -> forms.Field: ...
