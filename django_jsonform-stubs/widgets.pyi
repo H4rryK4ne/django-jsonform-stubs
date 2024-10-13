@@ -1,0 +1,16 @@
+from _typeshed import Incomplete
+from django import forms
+from django_jsonform.utils import get_setting as get_setting, normalize_schema as normalize_schema
+
+class JSONFormWidget(forms.Widget):
+    template_name: str
+    schema: Incomplete
+    model_name: Incomplete
+    file_handler: Incomplete
+    validate_on_submit: Incomplete
+    def __init__(self, schema, model_name: str = ..., file_handler: str = ..., validate_on_submit: bool = ..., attrs: Incomplete | None = ...) -> None: ...
+    def get_schema(self): ...
+    def render(self, name, value, attrs: Incomplete | None = ..., renderer: Incomplete | None = ...): ...
+    def add_error(self, error_map) -> None: ...
+    @property
+    def media(self): ...

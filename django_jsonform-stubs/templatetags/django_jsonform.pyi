@@ -1,0 +1,6 @@
+from _typeshed import Incomplete
+
+register: Incomplete
+
+def parse_datetime(value): ...
+def parse_time(value): ...
