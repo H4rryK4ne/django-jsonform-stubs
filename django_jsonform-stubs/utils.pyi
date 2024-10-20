@@ -1,5 +1,6 @@
-from collections.abc import Callable, Sequence
-from typing import Any, Literal, Optional, Required, TypedDict, Union, overload
+from collections.abc import Sequence
+from typing import Any, Optional, TypedDict, Union, overload
+from typing import Required, Literal
 
 from django.utils.functional import _StrOrPromise
 
@@ -120,10 +121,9 @@ class StringSchema(BaseInputFieldSchema, total=False):
     readonly: bool
     readOnly: bool  # alias for readonly
     placeholder: str
-    placeholder: str
     minLength: int
     maxLength: int
-    handler: Union[str, Callable[..., str]]  # TODO: specify args of callable
+    handler: str
 
 class NumberSchema(BaseInputFieldSchema, total=False):
     type: Required[Literal["number"]]

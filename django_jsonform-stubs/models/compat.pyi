@@ -3,12 +3,11 @@ from json import JSONDecoder, JSONEncoder
 from typing import Any, Optional
 
 from _typeshed import Incomplete
-from django.db import models
-from django.db.models import Model
-from django.forms import forms
+from django.db.models import Model, TextField
+from django.forms import Field
 from django.utils.functional import _StrOrPromise
 
-class JSONField(models.TextField):
+class JSONField(TextField):
     encoder: JSONEncoder
     decoder: JSONDecoder
 
@@ -26,4 +25,4 @@ class JSONField(models.TextField):
     def get_prep_value(self, value: Any) -> Optional[str]: ...
     def validate(self, value: Any, model_instance: Optional[Model]) -> None: ...
     def value_to_string(self, obj: Model) -> str: ...
-    def formfield(self, **kwargs: Any) -> forms.Field: ...
+    def formfield(self, **kwargs: Any) -> Field: ...  # type: ignore[override]

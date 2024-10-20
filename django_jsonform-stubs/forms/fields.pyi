@@ -2,11 +2,10 @@ from json import JSONDecoder, JSONEncoder
 from tkinter import Widget
 from typing import Any, Optional
 
-from django.contrib.postgres.forms import SimpleArrayField
 from django.db import models as models
 from django.forms import Field
 from django_jsonform.forms.compat import JSONFormField as DjangoJSONFormField
-from django_jsonform.utils import ErrorMap, RootSchema
+from django_jsonform.utils import ArraySchema, ErrorMap, RootSchema
 from django_jsonform.widgets import JSONFormWidget
 
 django_major: int
@@ -15,7 +14,7 @@ django_minor: int
 try:
     from django.contrib.postgres.forms import SimpleArrayField
 except ImportError:
-    class SimpleArrayField:
+    class SimpleArrayField:  # type: ignore[no-redef]
         mock_field: bool
 
 class JSONFormField(DjangoJSONFormField):
@@ -40,9 +39,9 @@ class ArrayFormField(SimpleArrayField):
     max_items: int
     min_items: int
     nested: bool
-    schema: RootSchema
+    schema: ArraySchema
     widget: Widget
     def __init__(self, base_field: Field, **kwargs: Any) -> None: ...
     def prepare_value(self, value: Any) -> Any: ...
     def to_python(self, value: Any) -> Any: ...
-    def get_schema(self): ...
+    def get_schema(self) -> ArraySchema: ...
